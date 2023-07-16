@@ -43,7 +43,7 @@ const App = function AppWrapper() {
         // display cover if user is not connected
         <div className="App">
           <header className="App-header">
-            <Cover name="My Certificate Cloud" connect={connect} coverImg={bg} />
+            <Cover name="My Certificate Cloud" connect={connect} />
           </header>
         </div>
       )}
