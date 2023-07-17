@@ -1,3 +1,5 @@
+![UML](https://github.com/WalterBrian/Certificate-Storage-on-Celo-Blockchain/blob/main/contracts/smart%20contract%20relationship%20diagram.png)
+
 MyNFT
 This contract is provided as-is without any warranties or guarantees.
 
