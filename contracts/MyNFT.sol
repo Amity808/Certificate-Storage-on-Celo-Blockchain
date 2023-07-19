@@ -48,6 +48,11 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
 
     mapping (uint256 => MintedCompletedCertificate) mintedCertificate;
 
+      // modifier to check if the address id the owner of the certificate
+    modifier isCertificateOwner(uint256 tokenId, address certificateOwner){
+        require(certificateOwner == ownerOf(tokenId), "You are not the owner");
+        _;
+    
     /**
     @dev Emitted when a new token is minted.
     @param to The address that received the token.
