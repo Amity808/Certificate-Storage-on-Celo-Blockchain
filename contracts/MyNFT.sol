@@ -77,7 +77,14 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     */
     event TokenBurned(uint256 tokenId);
 
-
+    
+    event NewMintedCompletedCertificate (
+        address owner,
+        string serialNumber,
+        string uri,
+        bool listed
+    );
+    
     /**
     @dev Safely mints a new token and assigns it to the specified address.
     @param to The address that will receive the minted token.
@@ -99,6 +106,8 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
         require(mintedCertificate[tokenId].listed == true, "Already Listed");
         string memory _uri = tokenURI(tokenId);
         mintedCertificate[tokenId] = MintedCompletedCertificate(msg.sender, _serialNumber, _uri, true);
+
+        emit NewMintedCompletedCertificate(msg.sender, _serialNumber, _uri, true);
     }
 
     /**
