@@ -40,6 +40,7 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
         address owner;
         string serialNumber;
         string uri;
+        bool listed;
     }
 
     /**
@@ -94,9 +95,10 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
         emit TokenMinted(to, tokenId, uri);
     }
 
-    function listCompletedCertificate(uint256 tokenId, string memory _serialNumber) public { 
+    function listCompletedCertificate(uint256 tokenId, string memory _serialNumber) public isCertificateOwner(tokenId, msg.sender) { 
+        require(mintedCertificate[tokenId].listed == true, "Already Listed");
         string memory _uri = tokenURI(tokenId);
-        mintedCertificate[tokenId] = MintedCompletedCertificate(msg.sender, _serialNumber, _uri);
+        mintedCertificate[tokenId] = MintedCompletedCertificate(msg.sender, _serialNumber, _uri, true);
     }
 
     /**
