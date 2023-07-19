@@ -34,6 +34,24 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     constructor() ERC721("MyNFT", "MNFT") {}
 
     /**
+    @struct add struct of listed completed certificate
+    */
+    struct MintedCompletedCertificate {
+        address owner;
+        string serialNumber;
+        string uri;
+    }
+
+    /**
+    @dev mapping address of completed certificates
+    */
+
+    function listCompletedCertificate(uint256 tokenId, string memory _serialNumber) public { 
+        string memory _uri = tokenURI(tokenId);
+        mintedCertificate[tokenId] = MintedCompletedCertificate(msg.sender, _serialNumber, _uri);
+    }
+
+    /**
     @dev Emitted when a new token is minted.
     @param to The address that received the token.
     @param tokenId The ID of the minted token.
