@@ -110,6 +110,10 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
         emit NewMintedCompletedCertificate(msg.sender, _serialNumber, _uri, true);
     }
 
+     function getCompleteCertificate(uint256 tokenId) public view returns (MintedCompletedCertificate memory) {
+        return mintedCertificate[tokenId];
+    }
+
     /**
     @dev Hook function that is called before a token transfer occurs.
     @param from The address transferring the token.

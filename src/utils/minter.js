@@ -114,6 +114,53 @@ export const getCertificates = async (minterContract) => {
     } catch (e) {
         console.log({ e })
     }
+
+}
+
+// function get all completed certificates
+export const getCompleteCertificates = async(minterContract) => {
+    const completeCert = [];
+    const certLength = await minterContract.methods.totalSupply().call();
+    
+    for (let i = 0; i < Number(certLength); i++) {
+        const cert = new Promise(async (resolve, reject) => {
+            try {
+                const res = await minterContract.methods.getCompleteCertificate(i).call();
+                const meta = await fetchCertificateMeta(res.url)
+                if(meta != null) {
+                    resolve({
+                        index: i,
+                        owner: res.owner,
+                        serialnumber: res.serialnumber,
+                        image: meta.data.image,
+                        name: meta.data.name,
+                        description: meta.data.description,
+                        attributes: meta.data.attributes,
+                    })
+                } else {
+                    resolve({
+                        index: i,
+                        owner: "0x0000000000000000000000000000000000000000",
+                        serialnumber: "",
+                        image: "",
+                        name: "",
+                        description: "",
+                        attributes: [{}, {}, {}],
+                    })
+                }
+            } catch (e) {
+                reject(e);
+            }
+        })
+
+        try {
+            const resolveCert = await cert;
+            completeCert.push(resolveCert);
+        } catch (e) {
+            console.log({ e })
+        }
+    }
+    return completeCert;
 }
 
 // function to listed completed cerficates progress
