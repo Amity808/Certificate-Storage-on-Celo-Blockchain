@@ -45,6 +45,10 @@ const CertificatesList = ({ minterContract, name}) => {
         }
     }
 
+    // function to post the completed certificated
+
+    
+
     // function to fetch the owner of the Certificate contract and use getAsset
 
     const fetchContractOwner = useCallback(async (minterContract) => {
