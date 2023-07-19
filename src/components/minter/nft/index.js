@@ -61,6 +61,9 @@ const CertificatesList = ({ minterContract, name}) => {
 
         } catch (error) {
             console.log(error)
+            toast (<NotificationError text="Failed to mint your certificate of progress" />)
+        } finally {
+            setLoading(false);
         }
     }
 
