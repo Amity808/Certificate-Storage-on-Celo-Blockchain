@@ -6,7 +6,7 @@ import AddCertificates from './Add';
 import Certificate from './Card'
 import Loader from '../../ui/Loader';
 import { NotificationSuccess, NotificationError } from '../../ui/Notifications'
-import { getCertificates, createCertificates, fetchCertificateContractOwner } from '../../../utils/minter'
+import { getCertificates, createCertificates, fetchCertificateContractOwner, listCompletedCertificate } from '../../../utils/minter'
 import { Row } from 'react-bootstrap'; 
  
 const CertificatesList = ({ minterContract, name}) => {
@@ -47,7 +47,23 @@ const CertificatesList = ({ minterContract, name}) => {
 
     // function to post the completed certificated
 
-    
+    const listCompletedCertificateData = async (data) => {
+        try {
+            if (certificates[data.tokenId] === undefined) {
+                toast(<NotificationError text="Your Certificat does not exist, Try add your certificate" />)
+            }else if (certificates[data.tokenId].serialNumber !== undefined) {
+                toast(<NotificationError text="Certificate already exist" />)
+            } else {
+                setLoading(true);
+                await listCompletedCertificate(minterContract, performActions, data);
+                getAssets()
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     // function to fetch the owner of the Certificate contract and use getAsset
 
