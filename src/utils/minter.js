@@ -4,6 +4,8 @@ import axios from 'axios'
 // Import Web3Storage from bundle.esm.min.js
 import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
 
+import { NotificationSuccess } from '../components/ui/Notifications';
+import { toast } from 'react-toastify';
 
 // Create a new Web3Storage client instance
 const client = new Web3Storage({
@@ -113,6 +115,21 @@ export const getCertificates = async (minterContract) => {
         console.log({ e })
     }
 }
+
+// function to listed completed cerficates progress
+export const listCompletedCertificate = async ( minterContract, performActions, { tokenId, serialnumber}) => {
+    await performActions(async (kit) => {
+        const { defaultAccount } = kit;
+
+        try {
+            await minterContract.methods.listCompletedCertificate(tokenId, serialnumber).send({ from: defaultAccount});
+            toast(<NotificationSuccess text="Listing Completed Certificate" />)
+        } catch (error) {
+            console.log(error);
+        }
+    })
+}
+
 
 // Function to fetch certificate metadata from an IPFS URL
 export const fetchCertificateMeta = async (ipfsUrl) => {
