@@ -46,10 +46,7 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     @dev mapping address of completed certificates
     */
 
-    function listCompletedCertificate(uint256 tokenId, string memory _serialNumber) public { 
-        string memory _uri = tokenURI(tokenId);
-        mintedCertificate[tokenId] = MintedCompletedCertificate(msg.sender, _serialNumber, _uri);
-    }
+    mapping (uint256 => MintedCompletedCertificate) mintedCertificate;
 
     /**
     @dev Emitted when a new token is minted.
@@ -90,6 +87,11 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         emit TokenMinted(to, tokenId, uri);
+    }
+
+    function listCompletedCertificate(uint256 tokenId, string memory _serialNumber) public { 
+        string memory _uri = tokenURI(tokenId);
+        mintedCertificate[tokenId] = MintedCompletedCertificate(msg.sender, _serialNumber, _uri);
     }
 
     /**
