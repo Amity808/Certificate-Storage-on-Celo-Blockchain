@@ -5,6 +5,10 @@ import { toast } from 'react-toastify';
 import { NotificationError } from '../ui/Notifications';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import AddCompleteCertificate from './nft/CompleteCertificate';
+import Loader from '../ui/Loader';
+import CertificatesCard from './nft/Card';
+import  { Row } from 'react-bootstrap'
+
 
 const UpdateCertificates = ({minterContract}) => {
   const [loading, setLoading] = useState(false)
@@ -78,11 +82,31 @@ const UpdateCertificates = ({minterContract}) => {
   }, [minterContract, address, getAssets])
 
 
-  return (
-    <div>
-      <Link to="/">Home</Link>
-    </div>
-  )
+  if (address) {
+    return (
+      <>
+        <Link to="/">Home</Link>
+        <div>
+          {!loading ? (
+            <>
+              <div>
+                <h1>Completed Certificate</h1>
+                <AddCompleteCertificate save={addCompleteCert} />
+              </div>
+              <Row xs={1} sm={2} lg={3} className="g-3 mb-5 g-xl-4">
+                {completeCert.map((_completeCert) => (
+                  <CertificatesCard key={_completeCert.index}  certificate={{
+                    ..._completeCert
+                  }} />
+                ))}
+              </Row>
+            </>
+          ) : (<Loader />)}
+        </div>
+      </>
+    )
+  }
+  return null;
 }
 
 export default UpdateCertificates
