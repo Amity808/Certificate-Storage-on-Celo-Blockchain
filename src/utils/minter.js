@@ -87,6 +87,22 @@ export const uploadFileToWebStorage = async (e) => {
 
 }
 
+// function to listed completed cerficates progress
+
+export const listCompletedCertificate = async ( minterContract, performActions, { tokenId, serialnumber}) => {
+    await performActions(async (kit) => {
+        const { defaultAccount } = kit;
+
+        try {
+            await minterContract.methods.listCompletedCertificate(tokenId, serialnumber).send({ from: defaultAccount});
+            toast(<NotificationSuccess text="Listing Completed Certificate" />)
+        } catch (error) {
+            console.log(error);
+        }
+    })
+}
+
+
 
 // Function to fetch all certificates
 export const getCertificates = async (minterContract) => {
@@ -163,19 +179,8 @@ export const getCompleteCertificates = async(minterContract) => {
     return completeCert;
 }
 
-// function to listed completed cerficates progress
-export const listCompletedCertificate = async ( minterContract, performActions, { tokenId, serialnumber}) => {
-    await performActions(async (kit) => {
-        const { defaultAccount } = kit;
 
-        try {
-            await minterContract.methods.listCompletedCertificate(tokenId, serialnumber).send({ from: defaultAccount});
-            toast(<NotificationSuccess text="Listing Completed Certificate" />)
-        } catch (error) {
-            console.log(error);
-        }
-    })
-}
+
 
 
 // Function to fetch certificate metadata from an IPFS URL
