@@ -5,10 +5,10 @@ import { Notification } from "./components/ui/Notifications";
 import Wallet from "./components/Wallet";
 import Cover from "./components//minter/Cover";
 import Certificates from './components/minter/nft';
-import bg from './assets/nft_geo_cover.png'
 import { useBalance, useMinterCertContract } from "./hooks";
-
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import UpdateCertificates from "./components/minter/UpdateCertificates";
 
 const App = function AppWrapper() {
   const { address, destroy, connect } = useContractKit();
@@ -33,6 +33,9 @@ const App = function AppWrapper() {
           </Nav>
           {/* display cover */}
           <main>
+            <Routes>
+              <Route path="/completecert" element={<UpdateCertificates />}/>
+            </Routes>
             <Certificates 
               name="My Certificate Cloud"
               updateBalance={getBalance}

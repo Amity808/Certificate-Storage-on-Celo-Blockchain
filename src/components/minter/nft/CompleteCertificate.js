@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTyes from 'prop-types'
 import { Button, Modal, Form, FloatingLabel } from 'react-bootstrap'
 
-const CompleteCertificate = ({ save }) => {
+const AddCompleteCertificate = ({ save }) => {
     const [tokenId, setTokenId] = useState('')
     const [serialnumber, setSerialnumber] = useState('')
     const [show, setShow] = useState(false)
@@ -62,8 +62,8 @@ const CompleteCertificate = ({ save }) => {
   )
 }
 
-CompleteCertificate.propTypes = {
+AddCompleteCertificate.propTypes = {
     save: PropTyes.func.isRequired,
 };
 
-export default CompleteCertificate;
+export default AddCompleteCertificate;

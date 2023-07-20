@@ -45,29 +45,6 @@ const CertificatesList = ({ minterContract, name}) => {
         }
     }
 
-    // function to post the completed certificated
-
-    const listCompletedCertificateData = async (data) => {
-        try {
-            if (certificates[data.tokenId] === undefined) {
-                toast(<NotificationError text="Your Certificat does not exist, Try add your certificate" />)
-            }else if (certificates[data.tokenId].serialNumber !== undefined) {
-                toast(<NotificationError text="Certificate already exist" />)
-            } else {
-                setLoading(true);
-                await listCompletedCertificate(minterContract, performActions, data);
-                getAssets()
-            }
-
-        } catch (error) {
-            console.log(error)
-            toast (<NotificationError text="Failed to mint your certificate of progress" />)
-        } finally {
-            setLoading(false);
-        }
-    }
-
-
     // function to fetch the owner of the Certificate contract and use getAsset
 
     const fetchContractOwner = useCallback(async (minterContract) => {
