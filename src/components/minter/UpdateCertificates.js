@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getCompleteCertificates, listCompletedCertificate } from '../../utils/minter';
 import { toast } from 'react-toastify';
@@ -51,9 +51,9 @@ const UpdateCertificates = ({minterContract}) => {
 
     const listCompletedCertificateData = async (data) => {
       try {
-          if (certificates[data.tokenId] === undefined) {
-              toast(<NotificationError text="Your Certificat does not exist, Try add your certificate" />)
-          }else if (certificates[data.tokenId].serialNumber !== undefined) {
+          if (completeCert[data.tokenId] === undefined) {
+              toast(<NotificationError text="Your Certificat does not exist, Try add your completeCert" />)
+          }else if (completeCert[data.tokenId].serialNumber !== undefined) {
               toast(<NotificationError text="Certificate already exist" />)
           } else {
               setLoading(true);
