@@ -31,7 +31,9 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     /**
     @dev Contract constructor. Initializes the ERC721 contract with the name "MyNFT" and the symbol "MNFT".
     */
-    constructor() ERC721("MyNFT", "MNFT") {}
+constructor() ERC721("MyNFT", "MNFT") {
+    _tokenIdCounter.increment(); // Initialize the counter to 1
+}
 
     /**
     @struct add struct of listed completed certificate
@@ -53,7 +55,7 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     modifier isCertificateOwner(uint256 tokenId, address certificateOwner){
         require(certificateOwner == ownerOf(tokenId), "You are not the owner");
         _;
-    
+    }
     /**
     @dev Emitted when a new token is minted.
     @param to The address that received the token.
@@ -102,13 +104,14 @@ contract  MyNFT is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
         emit TokenMinted(to, tokenId, uri);
     }
 
-    function listCompletedCertificate(uint256 tokenId, string memory _serialNumber) public isCertificateOwner(tokenId, msg.sender) { 
-        require(mintedCertificate[tokenId].listed == true, "Already Listed");
-        string memory _uri = tokenURI(tokenId);
-        mintedCertificate[tokenId] = MintedCompletedCertificate(msg.sender, _serialNumber, _uri, true);
+ function listCompletedCertificate(uint256 tokenId, string memory _serialNumber) public isCertificateOwner(tokenId, msg.sender) { 
+    require(!mintedCertificate[tokenId].listed, "Already Listed");
+    string memory _uri = tokenURI(tokenId);
+    mintedCertificate[tokenId] = MintedCompletedCertificate(msg.sender, _serialNumber, _uri, true);
 
-        emit NewMintedCompletedCertificate(msg.sender, _serialNumber, _uri, true);
-    }
+    emit NewMintedCompletedCertificate(msg.sender, _serialNumber, _uri, true);
+}
+
 
      function getCompleteCertificate(uint256 tokenId) public view returns (MintedCompletedCertificate memory) {
         return mintedCertificate[tokenId];
